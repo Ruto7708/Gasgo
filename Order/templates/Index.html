@@ -1,0 +1,170 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GasGo - Gas Refilling & Delivery</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{% static 'css/style.css'%}">
+</head>
+<body class="font-sans text-gray-800">
+
+  <!-- Navbar -->
+  <nav class="navbar shadow-md">
+    <div class="nav-container">
+      <!-- Logo -->
+      <a href="{% url 'Index' %}" class="nav-logo">GasGo</a>
+
+      <!-- Hamburger Menu Icon -->
+      <div class="nav-toggle" id="nav-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <!-- Navigation Links -->
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="{% url 'Index' %}" class="active">Home</a></li>
+        <li><a href="{% url 'About' %}">About Us</a></li>
+        <li><a href="{% url 'Services' %}">Services</a></li>
+        <li><a href="{% url 'Order' %}">Order Now</a></li>
+        <li><a href="{% url 'Contactus' %}">Contact Us</a></li>
+      </ul>
+    </div>
+  </nav>
+
+ <!-- Hero Section -->
+<section id="home" class="relative h-screen flex items-center justify-center text-center">
+
+  <!-- Background Image -->
+  <div class="absolute inset-0">
+    <img 
+      src="{% static 'images/background.jpg' %}" 
+      alt="Gas delivery truck bringing LPG cylinders"
+      class="w-full h-full object-cover"
+    />
+    <!-- Dark Overlay for Text Readability -->
+    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="relative z-10 px-6">
+    <h2 class="text-4xl md:text-5xl font-extrabold mb-4 text-white leading-tight">
+      Fast, Safe & Reliable <span class="text-blue-400">Gas Refilling</span> & Delivery
+    </h2>
+    <p class="text-lg text-gray-200 max-w-2xl mx-auto mb-6">
+      Order your gas refills or brand-new cylinders and get them delivered to your doorstep in record time.
+    </p>
+    <a href="{% url 'Order' %}" 
+       class="bg-blue-600 text-white px-8 py-3 rounded-lg shadow-lg hover:bg-blue-700 transition transform hover:scale-105">
+      Order Now
+    </a>
+  </div>
+
+</section>
+
+  <!-- Footer -->
+<footer class="bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 text-white pt-12" id="contact">
+  <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10">
+
+    <!-- Brand -->
+    <div>
+      <h2 class="text-3xl font-extrabold mb-4">GasGo</h2>
+      <p class="text-gray-300 leading-relaxed">
+        Your trusted partner for fast, safe, and reliable gas delivery right to your doorstep.
+      </p>
+      <div class="mt-5">
+        <a href="{% url 'Order' %}" class="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-lg shadow-md transition">
+          Order Now
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div>
+      <h4 class="text-lg font-semibold mb-4 border-b border-blue-500 pb-2">Quick Links</h4>
+      <ul class="space-y-3">
+        <li><a href="{% url 'Index' %}" class="hover:text-blue-400 transition">🏠 Home</a></li>
+        <li><a href="{% url 'About' %}" class="hover:text-blue-400 transition">ℹ About Us</a></li>
+        <li><a href="{% url 'Services' %}" class="hover:text-blue-400 transition">🛠 Services</a></li>
+        <li><a href="{% url 'Order' %}" class="hover:text-blue-400 transition">📅 Order Now</a></li>
+        <li><a href="{% url 'Contactus' %}" class="hover:text-blue-400 transition">📞 Contact Us</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact Info -->
+    <div>
+      <h4 class="text-lg font-semibold mb-4 border-b border-blue-500 pb-2">Contact</h4>
+      <ul class="space-y-3 text-gray-300">
+        <li>📞 +254 790 508 310</li>
+        <li>✉ info@gasgo.com</li>
+        <li>📍 Nairobi, Kenya</li>
+      </ul>
+    </div>
+
+    <!-- Social -->
+<div>
+  <h4 class="text-lg font-semibold mb-4 border-b border-blue-500 pb-2">Follow Us</h4>
+  <div class="flex space-x-5 text-2xl">
+    <a href="https://facebook.com/yourpage" target="_blank" rel="noopener" aria-label="Facebook">
+      <img src="{% static 'images/facebook.png1.png' %}" 
+           alt="Facebook" class="w-8 h-8 hover:opacity-80 transition" />
+    </a>
+    <a href="https://wa.me/254790508310" target="_blank" rel="noopener" aria-label="WhatsApp">
+      <img src="{% static 'images/whatsapp icon.f.png1.png' %}" 
+           alt="WhatsApp" class="w-8 h-8 hover:opacity-80 transition" />
+    </a>
+    <a href="https://t.me/yourtelegram" target="_blank" rel="noopener" aria-label="Telegram">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" 
+           alt="Telegram" class="w-8 h-8 hover:opacity-80 transition" />
+    </a>
+    <a href="https://instagram.com/yourhandle" target="_blank" rel="noopener" aria-label="Instagram">
+      <img src="{% static 'images/phone.png' %}" 
+           alt="Instagram" class="w-8 h-8 hover:opacity-80 transition" />
+    </a>
+  </div>
+</div>
+
+
+  <!-- Bottom Bar -->
+  <div class="mt-10 border-t border-gray-700 py-5 text-center text-gray-400 text-sm">
+    <p>© <span id="year"></span> GasGo. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+  <!-- JavaScript -->
+  <script>
+    // Mobile Nav Toggle
+    const navToggle = document.getElementById('nav-toggle');
+    const navMenu = document.getElementById('nav-menu');
+    navToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('show');
+    });
+
+    // Auto-update year
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+<!-- Floating WhatsApp Photo Button -->
+<a href="https://wa.me/254790508310" target="_blank" rel="noopener"
+   style="position:fixed; bottom:20px; right:20px; z-index:9999;">
+    <img src="{% static 'images/whatsapp icon.f.png1.png' %}" 
+         alt="Chat on WhatsApp" 
+         style="width:50px; height:50px; cursor:pointer;">
+</a>
+
+
+
+</body>
+</html>

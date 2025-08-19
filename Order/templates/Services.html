@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Our Services - GasGo{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/Services.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Services Section -->
+<section class="services-section pt-32 pb-20 px-6 bg-gray-50">
+  <div class="max-w-6xl mx-auto text-center mb-12">
+    <h1 class="text-4xl font-bold text-gray-900">Our Services</h1>
+    <p class="text-gray-600 mt-4 max-w-2xl mx-auto">
+      At GasGo, we provide reliable, safe, and fast gas-related solutions to keep your home and business running smoothly.
+    </p>
+  </div>
+
+  <div class="grid gap-10 md:grid-cols-3">
+    <!-- Service Card 1 -->
+    <div class="rounded-xl overflow-hidden shadow-lg group hover:shadow-2xl transition-shadow duration-500">
+      <div class="h-64 overflow-hidden">
+        <img src="{% static 'images/gas1.jpg' %}" alt="Gas Cylinder Refilling" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+      </div>
+      <div class="p-6 bg-white">
+        <h3 class="text-xl font-semibold mb-3 text-gray-900">Gas Cylinder Refilling</h3>
+        <p class="text-gray-600">Quick and safe refilling for your domestic and commercial gas cylinders, right at your doorstep.</p>
+      </div>
+    </div>
+
+    <!-- Service Card 2 -->
+    <div class="rounded-xl overflow-hidden shadow-lg group hover:shadow-2xl transition-shadow duration-500">
+      <div class="h-64 overflow-hidden">
+        <img src="{% static 'images/gas2.jpg' %}" alt="Home Delivery" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+      </div>
+      <div class="p-6 bg-white">
+        <h3 class="text-xl font-semibold mb-3 text-gray-900">Home Delivery</h3>
+        <p class="text-gray-600">Convenient and timely delivery so you never run out of gas when you need it most.</p>
+      </div>
+    </div>
+
+    <!-- Service Card 3 -->
+    <div class="rounded-xl overflow-hidden shadow-lg group hover:shadow-2xl transition-shadow duration-500">
+      <div class="h-64 overflow-hidden">
+        <img src="{% static 'images/gas.jpg' %}" alt="Installation & Maintenance" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+      </div>
+      <div class="p-6 bg-white">
+        <h3 class="text-xl font-semibold mb-3 text-gray-900">Installation & Maintenance</h3>
+        <p class="text-gray-600">Professional setup and maintenance services to ensure your gas system operates safely.</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

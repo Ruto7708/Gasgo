@@ -1,0 +1,701 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Order Now - GasGo</title>
+  <link rel="stylesheet" href="{% static 'css/Order.css' %}" />
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+</head>
+<style>
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f7f9fc;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Navbar */
+.navbar {
+  background: linear-gradient(90deg, #2563eb, #730fd7); /* Blue gradient */
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 4px 8px rgba(37, 99, 235, 0.4);
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 4.5rem;
+}
+
+.nav-logo {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #e0e7ff; /* Lighter Indigo */
+  text-decoration: none;
+  letter-spacing: 0.07em;
+  transition: color 0.3s ease;
+}
+
+.nav-logo:hover {
+  color: #93c5fd; /* Light blue */
+}
+
+/* Nav Menu */
+.nav-menu {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.nav-menu li a {
+  color: #dbeafe; /* Very light blue */
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-decoration: none;
+  padding: 0.5rem 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.3s, border-color 0.3s;
+}
+
+.nav-menu li a:hover,
+.nav-menu li a.active {
+  color: #be10e1; /* Blue-400 */
+  border-bottom-color: #60a5fa;
+  box-shadow: 0 2px 8px rgba(96, 165, 250, 0.6);
+  border-radius: 3px;
+}
+
+/* Hamburger */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 6px;
+}
+
+.nav-toggle span {
+  width: 28px;
+  height: 3.5px;
+  background: #dbeafe;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+
+/* ===== BOOKING FORM SECTION ===== */
+.form-section {
+  padding: 40px 20px;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+}
+
+h2 {
+  text-align: center;
+  color: #0d6efd;
+  margin-bottom: 10px;
+}
+
+p {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.form-card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  transition: border 0.3s;
+}
+
+input:focus,
+select:focus {
+  border-color: #0d6efd;
+  outline: none;
+}
+
+/* Buttons */
+.btn-primary,
+.btn-secondary {
+  display: inline-block;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  border: none;
+  transition: background 0.3s;
+}
+
+.btn-primary {
+  background: #0d6efd;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #0b5ed7;
+}
+
+.btn-secondary {
+  background: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #5a6268;
+}
+
+/* Map */
+.map {
+  width: 100%;
+  height: 300px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  background: #0d6efd;
+  color: white;
+  padding: 40px 20px 20px;
+}
+
+.footer-content {
+  max-width: 1100px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.footer-col h2,
+.footer-col h4 {
+  margin-bottom: 10px;
+}
+
+.footer-col p,
+.footer-col ul {
+  font-size: 0.95rem;
+}
+
+.footer-col ul {
+  list-style: none;
+}
+
+.footer-col ul li {
+  margin-bottom: 8px;
+}
+
+.footer-col ul li a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-col ul li a:hover {
+  color: #ffc107;
+}
+
+.footer-btn {
+  display: inline-block;
+  background: white;
+  color: #0d6efd;
+  padding: 8px 15px;
+  border-radius: 4px;
+  margin-top: 10px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.footer-btn:hover {
+  background: #ffc107;
+  color: black;
+}
+
+.social-icons a {
+  display: inline-block;
+  background: white;
+  color: #0d6efd;
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  border-radius: 50%;
+  text-align: center;
+  margin-right: 8px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.social-icons a:hover {
+  background: #ffc107;
+  color: black;
+}
+
+.footer-bottom {
+  text-align: center;
+  font-size: 0.9rem;
+  margin-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding-top: 10px;
+}
+
+/* ===== WHATSAPP FLOATING BUTTON ===== */
+.whatsapp-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #25D366;
+  color: white;
+  padding: 15px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: background 0.3s;
+}
+
+.whatsapp-btn:hover {
+  background: #1ebe5d;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .nav-menu {
+    display: none;
+    flex-direction: column;
+    background: #0d6efd;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 200px;
+    padding: 10px;
+  }
+
+  .nav-menu li {
+    margin: 10px 0;
+  }
+
+  .nav-toggle {
+    display: flex;
+  }
+
+  .nav-menu.show {
+    display: flex;
+  }
+}
+
+
+</style>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar shadow-md">
+    <div class="nav-container">
+      <!-- Logo -->
+      <a href="{% url 'Index' %}" class="nav-logo">GasGo</a>
+
+      <!-- Hamburger Menu Icon -->
+      <div class="nav-toggle" id="nav-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <!-- Navigation Links -->
+      <ul class="nav-menu" id="nav-menu">
+         <li><a href="{% url 'Index' %}" class="active">Home</a></li>
+        <li><a href="{% url 'About' %}">About Us</a></li>
+        <li><a href="{% url 'Services' %}">Services</a></li>
+        <li><a href="{% url 'Order' %}">Order Now</a></li>
+        <li><a href="{% url 'Contactus' %}">Contact Us</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Booking Section -->
+  <section class="form-section">
+    <div class="container">
+      <h2>Order Your Gas Delivery</h2>
+      <p>Schedule your gas refill or order a new cylinder in just a few clicks.</p>
+
+      <form id="bookingForm" class="form-card" novalidate>
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" required />
+
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" placeholder="07XXXXXXXX" required />
+
+        <label for="service">Service Type</label>
+        <select id="service" name="service" required>
+          <option value="">-- Select Service --</option>
+          <option value="refill">Gas Cylinder Refill</option>
+          <option value="new">Order New Cylinder</option>
+        </select>
+
+        <label for="gasBrand">Gas Brand</label>
+        <select id="gasBrand" name="gasBrand" required>
+          <option>K-Gas</option>
+          <option>Total Gas</option>
+          <option>Top Gas</option>
+          <option>City Gas</option>
+          <option>AfriGas</option>
+          <option>ProGas</option>
+          <option>Rubis</option>
+          <option>Mengas</option>
+          <option>Other</option>
+        </select>
+
+        <label for="gasType">Type of Gas</label>
+        <select id="gasType" name="gasType" required>
+          <option value="6kg">6 Kg</option>
+          <option value="13kg">13 Kg</option>
+          <option value="50kg">50 Kg</option>
+        </select>
+
+        <label for="date">Preferred Date</label>
+        <input type="date" id="date" name="date" required />
+
+        <label for="time">Preferred Time</label>
+        <input type="time" id="time" name="time" required />
+
+        <!-- WhatsApp Location Order Button -->
+<button id="whatsappLocationBtn"
+        style="background-color: #25D366; color: white; padding: 14px 24px; font-size: 17px; font-weight: bold; border: none; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); transition: transform 0.15s ease;">
+  <i class="fab fa-whatsapp" style="font-size: 20px;"></i> 📍 Send Order & Location via WhatsApp
+</button>
+
+<!-- Mobile-Friendly Modal -->
+<div id="locationModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); justify-content: flex-end; align-items: flex-end; z-index: 9999;">
+  <div id="modalContent" style="background: white; padding: 20px; border-radius: 16px 16px 0 0; width: 100%; max-width: 450px; margin: auto; transform: translateY(100%); transition: transform 0.15s ease-out;">
+    <div style="text-align: center;">
+      <div style="width: 50px; height: 5px; background: #ccc; border-radius: 3px; margin: 0 auto 10px;"></div>
+      <h2 style="margin-bottom: 8px;">📍 Choose Location Method</h2>
+
+      <!-- Loading section -->
+      <div id="loadingSpinner" style="display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 14px; color: #555;">
+        <div style="border: 3px solid #f3f3f3; border-top: 3px solid #25D366; border-radius: 50%; width: 18px; height: 18px; animation: spin 0.8s linear infinite;"></div>
+        <span id="locationStatus">Fetching your location...</span>
+        <div style="width: 100%; background: #eee; height: 6px; border-radius: 4px; overflow: hidden;">
+          <div id="progressBar" style="background: #25D366; height: 100%; width: 0%; transition: width 0.2s;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Location buttons -->
+    <div id="locationButtons" style="margin-top: 15px; display: none;">
+      <button id="pinSendBtn" style="background-color: #f39c12; color: white; padding: 14px; border: none; border-radius: 10px; width: 100%; font-size: 15px; font-weight: bold; cursor: pointer; margin-bottom: 10px;">📌 Pin & Send</button>
+      <button id="directSendBtn" style="background-color: #27ae60; color: white; padding: 14px; border: none; border-radius: 10px; width: 100%; font-size: 15px; font-weight: bold; cursor: pointer;">🚀 Direct Send</button>
+    </div>
+
+    <button id="closeModal" style="background: none; border: none; color: #888; margin-top: 15px; cursor: pointer; display: block; width: 100%; text-align: center;">Cancel</button>
+  </div>
+</div>
+
+<style>
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+</style>
+
+<script>
+  let storedName = "";
+  let storedOrder = "";
+  let phoneNumber = "254790508310"; // Replace with your WhatsApp number
+  let pendingMapsLink = "";
+  let currentLocationLink = "";
+  let progressInterval;
+
+  const btn = document.getElementById("whatsappLocationBtn");
+  const modal = document.getElementById("locationModal");
+  const modalContent = document.getElementById("modalContent");
+  const pinBtn = document.getElementById("pinSendBtn");
+  const directBtn = document.getElementById("directSendBtn");
+  const closeBtn = document.getElementById("closeModal");
+  const locationStatus = document.getElementById("locationStatus");
+  const locationButtons = document.getElementById("locationButtons");
+  const loadingSpinner = document.getElementById("loadingSpinner");
+  const progressBar = document.getElementById("progressBar");
+
+  btn.addEventListener("mouseover", () => btn.style.transform = "scale(1.05)");
+  btn.addEventListener("mouseout", () => btn.style.transform = "scale(1)");
+
+  btn.addEventListener("click", function () {
+    if (!storedName) {
+      storedName = prompt("📝 Please enter your name:");
+      if (!storedName) return alert("⚠️ Name is required to proceed.");
+    }
+
+    if (!storedOrder) {
+      storedOrder = prompt("🛒 What would you like to order?");
+      if (!storedOrder) return alert("⚠️ Order details are required to proceed.");
+    }
+
+    // Show modal immediately
+    openModal();
+
+    // Start progress animation
+    startProgress();
+
+    // Fetch location
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        let lat = position.coords.latitude.toFixed(6);
+        let lng = position.coords.longitude.toFixed(6);
+        currentLocationLink = `https://www.google.com/maps?q=${lat},${lng}`;
+        
+        stopProgress();
+        locationStatus.innerHTML = "✅ Location detected!";
+        loadingSpinner.style.display = "none";
+        locationButtons.style.display = "block";
+      }, function () {
+        stopProgress();
+        locationStatus.innerHTML = "⚠️ Unable to fetch location.";
+      });
+    } else {
+      stopProgress();
+      locationStatus.innerHTML = "⚠️ Geolocation not supported.";
+    }
+  });
+
+  function startProgress() {
+    progressBar.style.width = "0%";
+    let width = 0;
+    progressInterval = setInterval(() => {
+      if (width < 90) { // Stop at 90% until GPS finishes
+        width += 2;
+        progressBar.style.width = width + "%";
+      }
+    }, 100);
+  }
+
+  function stopProgress() {
+    clearInterval(progressInterval);
+    progressBar.style.width = "100%";
+  }
+
+  function openModal() {
+    modal.style.display = "flex";
+    locationButtons.style.display = "none"; 
+    loadingSpinner.style.display = "flex";
+    locationStatus.innerHTML = "Fetching your location...";
+    modalContent.style.transform = "translateY(0)";
+  }
+
+  function closeModal() {
+    modalContent.style.transform = "translateY(100%)";
+    setTimeout(() => {
+      modal.style.display = "none";
+    }, 150);
+  }
+
+  pinBtn.addEventListener("click", () => {
+    pendingMapsLink = currentLocationLink;
+    navigator.clipboard.writeText(currentLocationLink).catch(() => {});
+    closeModal();
+    window.open(currentLocationLink, "_blank");
+  });
+
+  directBtn.addEventListener("click", () => {
+    sendToWhatsApp(storedName, storedOrder, currentLocationLink);
+    closeModal();
+  });
+
+  closeBtn.addEventListener("click", closeModal);
+
+  window.addEventListener("focus", () => {
+    if (pendingMapsLink) {
+      navigator.clipboard.readText().then(finalLink => {
+        let linkToSend = finalLink.startsWith("http") ? finalLink : pendingMapsLink;
+        sendToWhatsApp(storedName, storedOrder, linkToSend);
+        pendingMapsLink = "";
+      });
+    }
+  });
+
+  function sendToWhatsApp(name, order, locationLink) {
+    let message = `Hi GasGo, my name is ${name}.\nOrder: ${order}\nMy location: ${locationLink}`;
+    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, "_blank");
+  }
+</script>
+
+
+        <button type="submit" class="btn-primary">Confirm Booking</button>
+      </form>
+
+      <!-- Receipt Container -->
+      <div id="receiptContainer" style="display:none; margin-top:30px;"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-col">
+        <h2>GasGo</h2>
+        <p>Your trusted partner for fast, safe, and reliable gas delivery right to your doorstep.</p>
+        <a href="{% url 'Order' %}" class="footer-btn">Order Now</a>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="{% url 'Index' %}">🏠 Home</a></li>
+          <li><a href="{% url 'About' %}">ℹ About Us</a></li>
+          <li><a href="{% url 'Services' %}">🛠 Services</a></li>
+          <li><a href="{% url 'Order' %}">📅 Order Now</a></li>
+          <li><a href="{% url 'Contactus' %}">📞 Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <p>📞 +254 790 508 310</p>
+        <p>✉ info@gasgo.com</p>
+        <p>📍 Nairobi, Kenya</p>
+      </div>
+      <div class="footer-col">
+        <h4 style="color: white; font-size: 1.2rem; margin-bottom: 15px; border-bottom: 2px solid #00bcd4; display: inline-block; padding-bottom: 5px;">
+          Follow Us
+        </h4>
+        <div class="social-icons" style="display: flex; gap: 15px; align-items: center;">
+          <a href="https://facebook.com/yourpage" target="_blank" aria-label="Facebook">
+            <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" width="35" height="35" style="transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+          </a>
+          <a href="https://wa.me/254790508310" target="_blank" aria-label="WhatsApp">
+            <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" width="35" height="35" style="transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+          </a>
+          <a href="https://t.me/yourtelegram" target="_blank" aria-label="Telegram">
+            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram" width="35" height="35" style="transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+          </a>
+          <a href="https://instagram.com/yourhandle" target="_blank" aria-label="Instagram">
+            <img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" alt="Instagram" width="35" height="35" style="transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <p class="footer-bottom" style="margin-top: 20px; font-size: 0.9rem; color: #ccc; text-align: center;">
+      © <span id="year"></span> GasGo. All rights reserved.
+    </p>
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+
+    <!-- Floating WhatsApp Photo Button -->
+    <a href="https://wa.me/254790508310" target="_blank" rel="noopener"
+       style="position:fixed; bottom:20px; right:20px; z-index:9999;">
+      <img src="{% static 'images/whatsapp icon.f.png1.png' %}" alt="Chat on WhatsApp" style="width:50px; height:50px; cursor:pointer;">
+    </a>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      const bookingForm = document.getElementById("bookingForm");
+      const receiptContainer = document.getElementById("receiptContainer");
+
+      bookingForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const name = document.getElementById("name").value;
+        const phone = document.getElementById("phone").value;
+        const service = document.getElementById("service").value;
+        const brand = document.getElementById("gasBrand").value;
+        const type = document.getElementById("gasType").value;
+        const date = document.getElementById("date").value;
+        const time = document.getElementById("time").value;
+
+        const prices = {
+          refill: { "6kg": 1250, "13kg": 2800, "50kg": 10000 },
+          new: { "6kg": 3600, "13kg": 6000, "50kg": 15000 }
+        };
+        const amount = prices[service][type] || 0;
+
+        receiptContainer.innerHTML = `
+          <div id="receipt" style="font-family: Arial; border:1px solid #ccc; padding:20px; max-width:500px; margin:auto; background:#fff;">
+            <img src="https://via.placeholder.com/150x50?text=GasGo+Logo" alt="GasGo Logo" style="display:block; margin:auto;"/>
+            <h2 style="text-align:center;">Order Receipt</h2>
+            <p><strong>Name:</strong> ${name}</p>
+            <p><strong>Phone:</strong> ${phone}</p>
+            <p><strong>Service:</strong> ${service}</p>
+            <p><strong>Brand:</strong> ${brand}</p>
+            <p><strong>Type:</strong> ${type}</p>
+            <p><strong>Date:</strong> ${date}</p>
+            <p><strong>Time:</strong> ${time}</p>
+            <h3 style="color:green;">Amount to Pay: KSh ${amount.toLocaleString()}</h3>
+            <button id="downloadPDF" style="padding:10px 20px; background:#007BFF; color:white; border:none; cursor:pointer;">Download PDF</button>
+          </div>
+        `;
+        receiptContainer.style.display = "block";
+
+        document.getElementById("downloadPDF").addEventListener("click", () => {
+          const element = document.getElementById("receipt");
+          html2pdf().from(element).save(`GasGo_Receipt_${Date.now()}.pdf`);
+        });
+      });
+    });
+
+    function initMap() {
+      const map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: -1.286389, lng: 36.817223 },
+        zoom: 12,
+      });
+
+      let marker;
+      map.addListener("click", (event) => {
+        const lat = event.latLng.lat();
+        const lng = event.latLng.lng();
+        document.getElementById("latitude").value = lat;
+        document.getElementById("longitude").value = lng;
+
+        if (marker) marker.setMap(null);
+        marker = new google.maps.Marker({ position: event.latLng, map: map });
+      });
+
+      document.getElementById("pinLocationBtn").addEventListener("click", () => {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition((position) => {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            document.getElementById("latitude").value = lat;
+            document.getElementById("longitude").value = lng;
+            map.setCenter({ lat, lng });
+
+            if (marker) marker.setMap(null);
+            marker = new google.maps.Marker({ position: { lat, lng }, map: map });
+          });
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
